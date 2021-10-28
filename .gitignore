@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Repo stuff
+roms/*
+todo
+gb_docs/*
+
+.idea
+.DS_Store
+*/.DS_Store
