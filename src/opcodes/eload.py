@@ -32,41 +32,41 @@ def load_RRn(cpu, t_1, t_2, n):
     cpu.memory.write_data(n, target)
 
 
-def ld_Rnn(cpu, t, nn):
+def load_Rnn(cpu, t, nn):
     # LD A,(nn)
     cpu.registers[t] = cpu.memory.read_data(nn)
 
 
-def nnR(cpu, nn, r):
+def load_nnR(cpu, nn, r):
     # LD (nn),A
     cpu.memory.write_data(cpu.registers[r], nn)
 
 
-def ldhAC(cpu):
+def load_hAC(cpu):
     # LDH A,(C)
     address = 0xFF00 + cpu.registers['C']
     cpu.registers['A'] = cpu.memory.read_data(address)
 
 
-def ldhCA(cpu):
+def load_dhCA(cpu):
     # LDH (C),A
     address = 0xFF00 + cpu.registers['C']
     cpu.memory.write_data(cpu.registers['A'], address)
 
 
-def ldhAn(cpu, n):
+def load_hAn(cpu, n):
     # LDH A,(n)
     address = 0xFF00 + n
     cpu.registers['A'] = cpu.memory.read_data(address)
 
 
-def ldhnA(cpu, n):
+def load_hnA(cpu, n):
     # LDH (n),A
     address = 0xFF00 + n
     cpu.memory.write_data(cpu.registers['A'], address)
 
 
-def lddahl(cpu):
+def load_dahl(cpu):
     # LD A, (Hl-)
     first = (cpu.registers['H'] << 8) & 0xFF00
     second = cpu.registers['L']
@@ -79,7 +79,7 @@ def lddahl(cpu):
     cpu.registers['L'] = new_value & 0x00FF
 
 
-def lddgla(cpu):
+def load_dgla(cpu):
     # LD (Hl-),A
     first = (cpu.registers['H'] << 8) & 0xFF00
     second = cpu.registers['L']
@@ -90,7 +90,7 @@ def lddgla(cpu):
     cpu.registers['L'] = new_value & 0x00FF
 
 
-def ldiahl(cpu):
+def load_iahl(cpu):
     # LD A, (Hl+)
     first = (cpu.registers['H'] << 8) & 0xFF00
     second = cpu.registers['L']
@@ -103,7 +103,7 @@ def ldiahl(cpu):
     cpu.registers['L'] = new_value & 0x00FF
 
 
-def ldigla(cpu):
+def load_igla(cpu):
     # LD (Hl+),A
     first = (cpu.registers['H'] << 8) & 0xFF00
     second = cpu.registers['L']

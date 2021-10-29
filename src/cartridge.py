@@ -9,3 +9,15 @@ class Cartridge:
             for byte_ in rom.read():
                 rom_data.append(byte_)
         self.cartridge = bytearray(rom_data)
+
+    def write_data(self, data, address):
+        pass
+
+    def read_data(self, address):
+        pass
+
+    def read_ram(self, address):
+        pass
+
+    def write_ram(self, data, address):
+        pass
