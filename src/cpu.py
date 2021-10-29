@@ -1,4 +1,5 @@
-from opcodes import execute_opc
+from opcodes import fetch_opc_info
+from memory import Memory
 
 
 class CPU:
@@ -18,7 +19,7 @@ class CPU:
             'SP': 0,
             'PC': 0
         }
-        self.memory = None # TODO: memory controller
+        self.memory = Memory()
 
     def setup(self) -> None:
         """
@@ -27,6 +28,18 @@ class CPU:
 
         self.registers['PC'] = 0x0100
 
-    def cycle(self):
-        execute_opc(self)
+    def fetch_opcode(self):
+        code = self.memory.read_data(self.registers['PC'])
+        self.registers['PC'] += 1
+
+        # TODO: this should only FETCH the code
+        info = fetch_opc_info(self, code)
+        args = []
+        for _ in range(info.len):
+            arg = self.memory.read_data(self.registers['PC'])
+            args.append(arg)
+            self.registers['PC'] += 1
+        all_args = info.args + args
+        info.func(*all_args)
+
 

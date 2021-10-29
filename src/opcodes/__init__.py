@@ -1,3 +1,3 @@
-from .pointer import execute_opc
+from .pointer import fetch_opc_info
 
-__all__ = ['execute_opc']
+__all__ = ['fetch_opc_info']

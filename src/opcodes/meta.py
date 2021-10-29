@@ -1,7 +1,7 @@
 from collections import namedtuple
-import earit as ea
-import eload as el
-import sload as sl
+#import earit as ea
+#import eload as el
+#import sload as sl
 Opc = namedtuple("Opcode", ['mnemonic', 'cycl', 'len', 'func', 'args'])
 
 
