@@ -114,3 +114,21 @@ def load_igla(cpu):
     cpu.registers['L'] = new_value & 0x00FF
 
 
+def ld_iofrom(cpu, n):
+    # ld A,(FF00+n)
+    pass
+
+
+def ld_ioto(cpu, n):
+    # ld (FF00+n),A
+    pass
+
+
+def ld_iofromc(cpu):
+    # LD A,(FF00+C)
+    pass
+
+
+def ld_iotoc(cpu):
+    # LD (FF00+C),A
+    pass
