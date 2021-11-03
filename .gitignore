@@ -132,7 +132,8 @@ dmypy.json
 roms/*
 todo
 gb_docs/*
-
+gb-test-roms/*
+misc/*
 .idea
 .DS_Store
 */.DS_Store

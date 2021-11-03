@@ -1,4 +1,4 @@
-from opcodes import fetch_opc_info
+from opcodes.pointer import fetch_opc_info
 from memory import Memory
 
 
