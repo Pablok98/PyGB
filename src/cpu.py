@@ -31,9 +31,19 @@ class CPU:
 
     def cycle(self):
         # Read current memory address
+        # TODO: reorganize cb plus optional args
         code = self.memory.read_data(self.registers['PC'])
         print(f'Fetched value: {hex(code)}')
         self.registers['PC'] += 1
+
+        if code == 0xcb:
+            code = self.memory.read_data(self.registers['PC'])
+            print(f'Fetched value: {hex(code)}')
+            self.registers['PC'] += 1
+            info = fetch_opc_info(self, code, True)
+            all_args = [self] + info.args
+            info.func(*all_args)
+            return
 
         info = fetch_opc_info(self, code)
         print(f'Opcode: {info}')

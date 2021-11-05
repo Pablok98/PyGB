@@ -11,7 +11,7 @@ from . import rotshi as rs
 Opc = namedtuple("Opcode", ['mnemonic', 'cycl', 'len', 'func', 'args'])
 
 
-def mock():
+def mock(cpu):
     return
 
 

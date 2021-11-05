@@ -32,9 +32,5 @@ if __name__ == "__main__":
     gb = Gameboy()
     gb.load_rom()
     gb.cpu.cycle()
-    gb.cpu.cycle()
-    gb.cpu.cycle()
-    gb.cpu.cycle()
-    gb.cpu.cycle()
-    gb.cpu.cycle()
+
 

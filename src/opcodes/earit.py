@@ -1,21 +1,10 @@
-# AUXILIARY
-# TODO: optimize flag getter
-def _lbin_to_hex(list_):
-    string = ''.join([str(x) for x in list_])
-    numb = int(string, 2)
-    return hex(numb)
-
-
-def _hex_to_lbin(hex_):
-    bin_ = bin(hex_)[2:].zfill(8)
-    list_ = [int(x) for x in bin_]
-    return list_
+from utils import hex_to_lbin, lbin_to_hex
 
 
 # ******   ADD   **********
 def add_op(cpu, value, carry=False):
     if carry:
-        carry = _hex_to_lbin(cpu.registers['F'])[4]
+        carry = hex_to_lbin(cpu.registers['F'])[4]
         value += carry
     new_value = cpu.registers['A'] + value
     flag = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -27,7 +16,7 @@ def add_op(cpu, value, carry=False):
     cpu.registers['A'] = new_value
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def add_ar(cpu, r):
@@ -76,7 +65,7 @@ def adc_ahl(cpu):
 # ***  Subtraction  ****
 def sub_op(cpu, value, carry=False):
     if carry:
-        carry = _hex_to_lbin(cpu.registers['F'])[4]
+        carry = hex_to_lbin(cpu.registers['F'])[4]
         value += carry
     new_value = cpu.registers['A'] - value
     flag = [0, 0, 0, 0, 0, 0, 1, 0]
@@ -88,7 +77,7 @@ def sub_op(cpu, value, carry=False):
     cpu.registers['A'] = new_value
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def sub_ar(cpu, r):
@@ -140,7 +129,7 @@ def and_op(cpu, value):
     flag = [0, 0, 0, 0, 0, 1, 0, 0]
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def and_ar(cpu, r):
@@ -171,7 +160,7 @@ def xor_op(cpu, value):
     flag = [0, 0, 0, 0, 0, 0, 0, 0]
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def xor_ar(cpu, r):
@@ -202,7 +191,7 @@ def or_op(cpu, value):
     flag = [0, 0, 0, 0, 0, 0, 0, 0]
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def or_ar(cpu, r):
@@ -237,7 +226,7 @@ def cp_op(cpu, value):
         flag[4] = 1
     if new_value == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def cp_ar(cpu, r):
@@ -265,7 +254,7 @@ def cp_ahl(cpu):
 def inc_r(cpu, r):
     # inc r
     # z0h-
-    flag = _hex_to_lbin(cpu.registers['F'])[4]
+    flag = hex_to_lbin(cpu.registers['F'])[4]
     flag = [0, 0, 0, 0, flag, 0, 0, 0]
     if (((cpu.registers[r] & 0xf) + (1 & 0xf)) & 0x10) == 0x10:
         flag[5] = 1
@@ -274,13 +263,13 @@ def inc_r(cpu, r):
         cpu.registers[r] -= 256
     if cpu.registers[r] == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def inc_hl(cpu):
     # inc (HL)
     # z0h-
-    flag = _hex_to_lbin(cpu.registers['F'])[4]
+    flag = hex_to_lbin(cpu.registers['F'])[4]
     flag = [0, 0, 0, 0, flag, 0, 0, 0]
 
     first = (cpu.registers['H'] << 8) & 0xFF00
@@ -295,13 +284,13 @@ def inc_hl(cpu):
     if value == 0:
         flag[7] = 1
     cpu.memory.write_data(value, address)
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def dec_r(cpu, r):
     # dec r
     # z1h-
-    flag = _hex_to_lbin(cpu.registers['F'])[4]
+    flag = hex_to_lbin(cpu.registers['F'])[4]
     flag = [0, 0, 0, 0, flag, 0, 1, 0]
     if (((cpu.registers[r] & 0xf) - (1 & 0xf)) & 0x10) == 0x10:
         flag[5] = 1
@@ -310,13 +299,13 @@ def dec_r(cpu, r):
         cpu.registers[r] += 256
     if cpu.registers[r] == 0:
         flag[7] = 1
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def dec_hl(cpu):
     # dec (HL)
     # z1h-
-    flag = _hex_to_lbin(cpu.registers['F'])[4]
+    flag = hex_to_lbin(cpu.registers['F'])[4]
     flag = [0, 0, 0, 0, flag, 0, 1, 0]
 
     first = (cpu.registers['H'] << 8) & 0xFF00
@@ -331,7 +320,7 @@ def dec_hl(cpu):
     if value == 0:
         flag[7] = 1
     cpu.memory.write_data(value, address)
-    cpu.registers['F'] = _lbin_to_hex(flag)
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def daa(cpu):
