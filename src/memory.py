@@ -1,12 +1,13 @@
-from .cartridge import Cartridge
-from .config import ROM_PATH
+from cartridge import CartridgeMBC1
+from config import ROM_PATH
 
 
 class Memory:
     def __init__(self):
         self.wram = bytearray(8192)
         self.vram = bytearray(8192)
-        self.cartridge = Cartridge()
+        # TODO: implement all MBCs, for now, we force MBC1.
+        self.cartridge = CartridgeMBC1()
         self.io_registers = bytearray(128)
 
     def load_cartridge(self, path):
@@ -17,13 +18,14 @@ class Memory:
         # TODO: once upgrded to python 3.10, compress both match cases
         # into one
         if 0x0000 <= address <= 0x3FFF:
+            # TODO: when MBCs are implemented, this won't do
             return self.cartridge.read_data(address)
         elif 0x4000 <= address <= 0x7FFF:
             return self.cartridge.read_data(address)
         elif 0x8000 <= address <= 0x9FFF:
             return self.vram[address - 0x8000]
         elif 0xA000 <= address <= 0xBFFF:
-            return self.cartridge.read_ram(address - 0xA000)
+            return self.cartridge.read_data(address)
         elif 0xC000 <= address <= 0xCFFF:
             return self.wram[address - 0xC000]
         elif 0xD000 <= address <= 0xDFFF:
@@ -49,7 +51,7 @@ class Memory:
         elif 0x8000 <= address <= 0x9FFF:
             self.vram[address - 0x8000] = data
         elif 0xA000 <= address <= 0xBFFF:
-            self.cartridge.write_ram(data, address - 0xA000)
+            self.cartridge.write_data(data, address)
         elif 0xC000 <= address <= 0xCFFF:
             self.wram[address - 0xC000] = data
         elif 0xD000 <= address <= 0xDFFF:
