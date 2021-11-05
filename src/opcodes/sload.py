@@ -1,8 +1,8 @@
-def load_rrnn(cpu, r_1, r_2, nn):
-    # LD rr,nn
-    cpu.registers[r_1] = (nn & 0xFF00) >> 8
-    cpu.registers[r_2] = nn & 0x00FF
+def load_rrnn(cpu, r_1, r_2, n_1, n_2):
 
+    # LD rr,nn
+    cpu.registers[r_1] = n_2
+    cpu.registers[r_2] = n_1
 
 def load_nnsp(cpu, nn):
     # LD (nn), SP

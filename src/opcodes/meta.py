@@ -68,7 +68,7 @@ pointer = {
     # TODO: SP is 16-bit, make property
     0x31: Opc('LD SP,nn', 12, 3, sl.load_rrnn, ['S', 'P']),
     0x32: Opc('LD (HL-),A', 8, 1, el.load_dgla, []),
-    0x33: Opc('INC SP', 8, 1, sa.inc_rr, ['SP']),
+    0x33: Opc('INC SP', 8, 1, sa.inc_rr, ['S', 'P']),
     0x34: Opc('INC (HL)', 12, 1, ea.inc_hl, []),
     0x35: Opc('DEC (HL)', 12, 1,  ea.dec_hl, []),
     0x36: Opc('LD (HL),n', 12, 2, el.load_RRn, ['H', 'L']),
@@ -76,7 +76,7 @@ pointer = {
     0x38: Opc('JR C,n', 8, 2, jp.jr_fpcdd, ['C']),
     0x39: Opc('ADD HL,SP', 8, 1, sa.add_hlrr, ['S', 'P']),
     0x3A: Opc('LD A,(HL-)', 8, 1, el.load_dahl, []),
-    0x3B: Opc('DEC SP', 8, 1, sa.dec_rr, ['SP']),
+    0x3B: Opc('DEC SP', 8, 1, sa.dec_rr, ['S', 'P']),
     0x3C: Opc('INC A', 4, 1, ea.inc_r, ['A']),
     0x3D: Opc('DEC A', 4, 1, ea.dec_r, ['A']),
     0x3E: Opc('LD A,n', 8, 2, el.load_rn, ['A']),
