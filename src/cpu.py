@@ -23,6 +23,16 @@ class CPU:
         }
         self.memory = memory
 
+    @property
+    def sp(self):
+        val = (self.registers['S'] << 8) + self.registers['P']
+        return val
+
+    @sp.setter
+    def sp(self, value):
+        self.registers['S'] = value & 0xFF00
+        self.registers['P'] = value & 0x00FF
+
     def setup(self) -> None:
         """
         Makes the initial set-up for the Cpu
@@ -33,28 +43,35 @@ class CPU:
         # Read current memory address
         # TODO: reorganize cb plus optional args
         code = self.memory.read_data(self.registers['PC'])
-        print(f'Fetched value: {hex(code)}')
+        print("===========================================")
+
+        print(f'Fetched opcode: {hex(code)}')
+
         self.registers['PC'] += 1
 
         if code == 0xcb:
             code = self.memory.read_data(self.registers['PC'])
-            print(f'Fetched value: {hex(code)}')
+
+            print(f'Fetched 0xCB Opcode: {hex(code)}')
+
             self.registers['PC'] += 1
             info = fetch_opc_info(self, code, True)
+            print(f'Opcode info: {info}')
             all_args = [self] + info.args
             info.func(*all_args)
             return
 
         info = fetch_opc_info(self, code)
-        print(f'Opcode: {info}')
+        print(f'Opcode info: {info}')
         op_args = []
         for _ in range(info.len - 1):
             code = self.memory.read_data(self.registers['PC'])
-            print(f'Fetched value: {hex(code)}')
+
+            print(f'Fetched argument: {hex(code)}')
+
             op_args.append(code)
             self.registers['PC'] += 1
         all_args = [self] + info.args + op_args
-        print(all_args)
         info.func(*all_args)
 
 

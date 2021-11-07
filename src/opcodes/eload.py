@@ -32,14 +32,38 @@ def load_RRn(cpu, t_1, t_2, n):
     cpu.memory.write_data(n, target)
 
 
-def load_Rnn(cpu, t, nn):
+def load_Rnn(cpu, t, n_1, n_2):
     # LD A,(nn)
+    nn = (n_2 << 8) + n_1
     cpu.registers[t] = cpu.memory.read_data(nn)
 
 
-def load_nnR(cpu, nn, r):
+def load_nnR(cpu, r, n_1, n_2):
     # LD (nn),A
+    nn = (n_2 << 8) + n_1
     cpu.memory.write_data(cpu.registers[r], nn)
+
+
+def ld_iofrom(cpu, n):
+    # ld A,(FF00+n)
+    load_Rnn(cpu, 'A', n, 0xFF)
+
+
+def ld_ioto(cpu, n):
+    # ld (FF00+n),A
+    load_nnR(cpu, 'A', n, 0xFF)
+
+
+def ld_iofromc(cpu):
+    # LD A,(FF00+C)
+    n = cpu.registers['C']
+    load_Rnn(cpu, 'A', n, 0xFF)
+
+
+def ld_iotoc(cpu):
+    # LD (FF00+C),A
+    n = cpu.registers['C']
+    load_nnR(cpu, 'A', n, 0xFF)
 
 
 def load_hAC(cpu):
@@ -114,21 +138,3 @@ def load_igla(cpu):
     cpu.registers['L'] = new_value & 0x00FF
 
 
-def ld_iofrom(cpu, n):
-    # ld A,(FF00+n)
-    pass
-
-
-def ld_ioto(cpu, n):
-    # ld (FF00+n),A
-    pass
-
-
-def ld_iofromc(cpu):
-    # LD A,(FF00+C)
-    pass
-
-
-def ld_iotoc(cpu):
-    # LD (FF00+C),A
-    pass

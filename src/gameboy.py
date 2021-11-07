@@ -12,7 +12,7 @@ class Gameboy:
         self.cpu = CPU(self.memory)
 
         # Screen setup
-        self.screen = Screen()
+        self.screen = Screen(self.memory)
 
     def load_rom(self, path=c.ROM_PATH):
         self.memory.load_cartridge(path)
@@ -31,6 +31,7 @@ if __name__ == "__main__":
 
     gb = Gameboy()
     gb.load_rom()
-    gb.cpu.cycle()
+    for i in range(100):
+        gb.cpu.cycle()
 
 

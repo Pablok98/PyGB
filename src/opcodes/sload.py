@@ -4,6 +4,7 @@ def load_rrnn(cpu, r_1, r_2, n_1, n_2):
     cpu.registers[r_1] = n_2
     cpu.registers[r_2] = n_1
 
+
 def load_nnsp(cpu, nn):
     # LD (nn), SP
     cpu.registers['SP'] = nn

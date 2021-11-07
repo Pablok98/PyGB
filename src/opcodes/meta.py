@@ -222,7 +222,7 @@ pointer = {
     0xCA: Opc('JP Z,nn', 12, 3, jp.jump_fnn, ['Z']),
     0xCB: Opc('PREFIX CB', 4, 1, mock, []),
     0xCC: Opc('CALL Z,nn', 12, 3, jp.call_fnn, ['Z']),
-    0xCD: Opc('CALL nn', 24, 3, jp.call_nn, ['']),
+    0xCD: Opc('CALL nn', 24, 3, jp.call_nn, []),
     0xCE: Opc('ADC A,n', 8, 2, ea.adc_an, []),
     0xCF: Opc('RST 08h', 16, 1, jp.rst_n, ['08']),
     0xD0: Opc('RET NC', 8, 1, jp.retf, ['NC']),

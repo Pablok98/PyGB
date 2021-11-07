@@ -8,6 +8,7 @@ def bit_nr(cpu, n, r):
     flag = [0, 0, 0, 0, flag, 1, 0, 0]
     bit = hex_to_lbin(cpu.registers[r])[n]
     flag[7] = bit
+    cpu.registers['F'] = lbin_to_hex(flag)
 
 
 def bit_nhl(cpu, n):

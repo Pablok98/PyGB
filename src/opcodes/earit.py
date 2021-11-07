@@ -307,7 +307,6 @@ def dec_hl(cpu):
     # z1h-
     flag = hex_to_lbin(cpu.registers['F'])[4]
     flag = [0, 0, 0, 0, flag, 0, 1, 0]
-
     first = (cpu.registers['H'] << 8) & 0xFF00
     second = cpu.registers['L']
     address = first + second
